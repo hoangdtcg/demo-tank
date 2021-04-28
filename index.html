@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="Bullet.js"></script>
+    <script src="Tank.js"></script>
+</head>
+<body>
+<canvas id="game" width="800" height="600" style="border: 1px solid black;cursor: move"></canvas>
+<script>
+    let canvas = document.getElementById('game');
+    let ctx = canvas.getContext('2d');
+
+    let tank = new Tank(400, 300);
+    tank.drawImg(ctx);
+
+    function clearScreen() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    function canvasMouseMove(pos) {
+        let x = pos.pageX - canvas.offsetLeft;
+        let y = pos.pageY - canvas.offsetTop;
+        tank.rotateCannon(x,y);
+    }
+    function canvasMouseDown(e) {
+        tank.fire();
+    }
+
+    function main() {
+        clearScreen();
+        tank.drawBullets(canvas);
+        tank.drawImg(ctx);
+        requestAnimationFrame(main);
+    }
+    main();
+    canvas.onmousemove = canvasMouseMove;
+    canvas.onmousedown = canvasMouseDown;
+</script>
+</body>
+</html>
